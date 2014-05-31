@@ -16,9 +16,6 @@ fs.readFile('test.txt', 'utf-8', function(err, data) {
 	while (g.length > 2) {
 		g = cut(g);
 	}
-	for (var i = 0; i< g.length; i++) {
-		console.log(g[i].head,g[i].tail);
-	}
 });
 
 function linked(a) {
@@ -49,23 +46,42 @@ var cut = function(arr) {
 
 	console.log(i, j, a, b, bi);
 	var temp = [];
-	for(var k = 0; k < arr[i].tail.length; k++) {
-		if (arr[i].tail[k] !== b) temp.push(arr[i].tail[k]);
+	var flag = false;
+	console.log(arr[i].tail);
+	for (var k = 0; k < arr[i].tail.length; k++) {
+		if (arr[i].tail[k] !== b || flag) {
+			temp.push(arr[i].tail[k]);
+		} else {
+			flag = true;
+		}
 	}
 	arr[i].tail = temp;
+	console.log(arr[i].tail);
 
+	console.log(arr[bi].tail);
 	temp = [];
-	for(var k = 0; k < arr[bi].tail.length; k++) {
-		if (arr[bi].tail[k] !== a) temp.push(arr[bi].tail[k]);
+	flag = false;
+	for (var k = 0; k < arr[bi].tail.length; k++) {
+		if (arr[bi].tail[k] !== a || flag) {
+			temp.push(arr[bi].tail[k]);
+		} else {
+			flag = true;
+		}
 	}
 	arr[bi].tail = temp;
+	console.log(arr[bi].tail);
 
-	arr[i].tail.concat(arr[bi].tail);
+	console.log(arr[i].tail, arr[bi].tail);
+	arr[i].tail = arr[i].tail.concat(arr[bi].tail);
+	console.log(arr[i].tail, arr[bi].tail);
 
 	for (var k = 0; k < arr.length; k++) {
 		if (k !== bi) result.push(arr[k]);
 	}
 
-	vertices[b.v].v = vertices[a.v].v;	
+	vertices[b.v].v = vertices[a.v].v;
+	for (var i = 0; i < result.length; i++) {
+		console.log(result[i].head, result[i].tail);
+	}
 	return result;
 }
